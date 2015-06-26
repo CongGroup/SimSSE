@@ -1,0 +1,116 @@
+-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
+
+DSSSE Experiment - Building Secure Index:
+
+	Data set: H:\data\ccs14\lsh-L10R005-no-url
+
+	Version: with counter, limited in 1000
+
+	Total time cost: 392 ms:
+
+		Insert time: 312 ms
+		Encryption time: 80 ms
+
+	Setting:
+		L = 10, initialC = 5, W = 127, threshold = 10
+
+	Result:
+		Load factor:                            78.74016%
+		Directly insert successfully:           1000
+		Kick-away insert successfully:          0
+		Increasing counter insert successfully: 0
+		Insert failed:                          0
+		Maximum counter:                        5
+		Total kick number:                      0
+
+		Average try time:                       2.255
+
+Insert testing finished at 2015-06-26 05:30:58.
+
+-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
+
+DSSSE Experiment - Building Secure Index:
+
+	Data set: H:\data\ccs14\lsh-L10R005-no-url
+
+	Version: with counter, limited in 1000
+
+	Total time cost: 255 ms:
+
+		Insert time: 237 ms
+		Encryption time: 18 ms
+
+	Setting:
+		L = 10, initialC = 5, W = 127, threshold = 10
+
+	Result:
+		Load factor:                            78.74016%
+		Directly insert successfully:           1000
+		Kick-away insert successfully:          0
+		Increasing counter insert successfully: 0
+		Insert failed:                          0
+		Maximum counter:                        5
+		Total kick number:                      0
+
+		Average try time:                       2.255
+
+Insert testing finished at 2015-06-26 05:32:21.
+
+-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
+
+DSSSE Experiment - Building Secure Index:
+
+	Data set: H:\data\ccs14\lsh-L10R005-sample.txt
+
+	Version: with counter, limited in 1000
+
+	Total time cost: 255 ms:
+
+		Insert time: 237 ms
+		Encryption time: 18 ms
+
+	Setting:
+		L = 10, initialC = 5, W = 127, threshold = 10
+
+	Result:
+		Load factor:                            78.74016%
+		Directly insert successfully:           1000
+		Kick-away insert successfully:          0
+		Increasing counter insert successfully: 0
+		Insert failed:                          0
+		Maximum counter:                        5
+		Total kick number:                      0
+
+		Average try time:                       2.184
+
+Insert testing finished at 2015-06-26 05:47:37.
+
+-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
+
+DSSSE Experiment - Building Secure Index:
+
+	Data set: H:\data\ccs14\lsh-L10R005-sample.txt
+
+	Version: with counter, limited in 1000
+
+	Total time cost: 305 ms:
+
+		Insert time: 232 ms
+		Encryption time: 73 ms
+
+	Setting:
+		L = 10, initialC = 5, W = 127, threshold = 10
+
+	Result:
+		Load factor:                            78.74016%
+		Directly insert successfully:           1000
+		Kick-away insert successfully:          0
+		Increasing counter insert successfully: 0
+		Insert failed:                          0
+		Maximum counter:                        5
+		Total kick number:                      0
+
+		Average try time:                       2.184
+
+Insert testing finished at 2015-06-26 05:47:54.
+
