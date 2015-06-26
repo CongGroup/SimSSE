@@ -22,11 +22,11 @@ public class SecureIndex {
 
     public static int numOfKick;
 
-    private short L;
+    private short l;
 
-    private int W;
+    private int w;
 
-    private int initialC;
+    private int d;
 
     private short thresholdOfKick;
 
@@ -46,13 +46,13 @@ public class SecureIndex {
 
     private ArrayList<HashMap<Long, Integer>> counterSpace;
 
-    public SecureIndex(short _L, int _W, int _initialC, short _thresholdOfKick, short _counterLimit, int _totalSize, int _loopSize) {
+    public SecureIndex(short _l, int _w, int _d, short _thresholdOfKick, short _counterLimit, int _totalSize, int _loopSize) {
 
         this.maxC = 0;
 
-        this.L = _L;
-        this.W = _W;
-        this.initialC = _initialC;
+        this.l = _l;
+        this.w = _w;
+        this.d = _d;
         this.thresholdOfKick = _thresholdOfKick;
         this.counterLimit = _counterLimit;
 
@@ -60,13 +60,13 @@ public class SecureIndex {
         this.loopSize = _loopSize;
 
         //this.indexTable = new ArrayList<IndexRow>(L);
-        this.indexTable = new long[L][W];
+        this.indexTable = new long[l][w];
 
-        this.counterSpace = new ArrayList<HashMap<Long, Integer>>(L);  // key: LSH value in specific row, value: maximum counter
+        this.counterSpace = new ArrayList<HashMap<Long, Integer>>(l);  // key: LSH value in specific row, value: maximum counter
 
         this.lshVectors = new LSHVector[totalSize + 1];
 
-        for (int i = 0; i < L; ++i) {
+        for (int i = 0; i < l; ++i) {
 
             //indexTable.add(new IndexRow(W));
 
@@ -265,7 +265,7 @@ public class SecureIndex {
         boolean isSuccess = false;
 
         // Process 1: directly insert
-        int idx = random.nextInt(L);
+        int idx = random.nextInt(l);
         int firstIdx = idx;
         int numOfLevelTry = 0;
 
@@ -275,7 +275,7 @@ public class SecureIndex {
         numOfLevelTry = 0;
 
         // The following section is used to search empty bucket in L bone position
-        while (numOfLevelTry < L) {
+        while (numOfLevelTry < l) {
 
             // control the L levels
             ++numOfLevelTry;
@@ -283,7 +283,7 @@ public class SecureIndex {
             // record the total number of steps
             ++numOfTry;
 
-            searchKey = encryptPosition(key1, this.lshVectors[BaseTool.mapIndex(newLshID, loopSize)].getLSHValueByIndex(idx), 0, W);
+            searchKey = encryptPosition(key1, this.lshVectors[BaseTool.mapIndex(newLshID, loopSize)].getLSHValueByIndex(idx), 0, w);
 
             if (indexTable[idx][searchKey] == 0) {
 
@@ -297,7 +297,7 @@ public class SecureIndex {
                 break;
             }
 
-            idx = (++idx) % L;
+            idx = (++idx) % l;
 
             //System.out.println("Number of level try : " + numOfLevelTry);
         }
@@ -308,16 +308,16 @@ public class SecureIndex {
 
             numOfLevelTry = 0;
 
-            while (numOfLevelTry < L && !isSuccess) {
+            while (numOfLevelTry < l && !isSuccess) {
 
                 ++numOfLevelTry;
 
                 // range from 1 to initialC
-                for (int j = 1; j <= initialC; ++j) {
+                for (int j = 1; j <= d; ++j) {
 
                     ++numOfTry;
 
-                    searchKey = encryptPosition(key1, this.lshVectors[BaseTool.mapIndex(newLshID, loopSize)].getLSHValueByIndex(idx), j, W);
+                    searchKey = encryptPosition(key1, this.lshVectors[BaseTool.mapIndex(newLshID, loopSize)].getLSHValueByIndex(idx), j, w);
 
                     if (indexTable[idx][searchKey] == 0) {
 
@@ -336,7 +336,7 @@ public class SecureIndex {
                     }
                 }
 
-                idx = (++idx) % L;
+                idx = (++idx) % l;
             }
         }
 
@@ -348,7 +348,7 @@ public class SecureIndex {
                     // Handle Kick-away
                     // Add: if fail, recover all positions
 
-                    searchKey = encryptPosition(key1, this.lshVectors[BaseTool.mapIndex(newLshID, loopSize)].getLSHValueByIndex(firstIdx), 0, W);
+                    searchKey = encryptPosition(key1, this.lshVectors[BaseTool.mapIndex(newLshID, loopSize)].getLSHValueByIndex(firstIdx), 0, w);
 
                     long tempId = indexTable[firstIdx][searchKey];
 
@@ -389,10 +389,10 @@ public class SecureIndex {
 
             boolean fail = true;
 
-            for (int i = 0; i < L; ++i) {
-                for (int j = initialC + 1; j <= counterLimit; ++j) {
+            for (int i = 0; i < l; ++i) {
+                for (int j = d + 1; j <= counterLimit; ++j) {
 
-                    searchKey = encryptPosition(key1, this.lshVectors[BaseTool.mapIndex(newLshID, loopSize)].getLSHValueByIndex(i), j, W);
+                    searchKey = encryptPosition(key1, this.lshVectors[BaseTool.mapIndex(newLshID, loopSize)].getLSHValueByIndex(i), j, w);
 
                     if (indexTable[idx][searchKey] == 0) {
                         if (j < minCounter) {
@@ -414,7 +414,7 @@ public class SecureIndex {
                 ++numOfTry;
 
                 // insert to the minimum counter position
-                searchKey = encryptPosition(key1, this.lshVectors[BaseTool.mapIndex(newLshID, loopSize)].getLSHValueByIndex(minRow), minCounter, W);
+                searchKey = encryptPosition(key1, this.lshVectors[BaseTool.mapIndex(newLshID, loopSize)].getLSHValueByIndex(minRow), minCounter, w);
 
                 indexTable[minRow][searchKey] = newLshID;
 
@@ -436,9 +436,9 @@ public class SecureIndex {
 
     public void encryptAllTable(String key2) {
 
-        for (int i = 0; i < L; ++i) {
+        for (int i = 0; i < l; ++i) {
 
-            for (int j = 0; j < W; ++j) {
+            for (int j = 0; j < w; ++j) {
                 Integer mask = random.nextInt(65535);
                 // if not empty
                 if (indexTable[i][j] != 0) {
@@ -460,18 +460,18 @@ public class SecureIndex {
      */
     public HashSet<LSHVector> searchSecure(LSHVector query, String key1, String key2) {
 
-        HashSet<LSHVector> similarItemList = new HashSet<LSHVector>(L * initialC);
+        HashSet<LSHVector> similarItemList = new HashSet<LSHVector>(l * d);
 
         long probValue;
         int searchKey;
-        for (int i = 0; i < L; ++i) {
+        for (int i = 0; i < l; ++i) {
 
             probValue = query.getLSHValueByIndex(i);
 
             long k1Vj = clientK1Vj(key1, probValue);
             long k2Vj = clientK2Vj(key2, probValue);
 
-            for (int j = 0; j <= initialC; ++j) {
+            for (int j = 0; j <= d; ++j) {
 
 
                 searchKey = serverPosition(k1Vj, j);
@@ -491,7 +491,7 @@ public class SecureIndex {
     public ArrayList<LSHVector> searchForTruePositive(LSHVector query, String key1, String key2) {
 
         //HashSet<LSHVector> similarItemList = new HashSet<LSHVector>(L * this.maxC);
-        ArrayList<LSHVector> similarItemList = new ArrayList<LSHVector>(L * this.initialC);
+        ArrayList<LSHVector> similarItemList = new ArrayList<LSHVector>(l * this.d);
 
         long probValue;
         int searchKey;
@@ -501,7 +501,7 @@ public class SecureIndex {
         long clientTotalTime = 0;
         long startTimeServer = System.nanoTime();
 
-        for (int i = 0; i < L; ++i) {
+        for (int i = 0; i < l; ++i) {
 
             probValue = query.getLSHValueByIndex(i);
 
@@ -512,7 +512,7 @@ public class SecureIndex {
 
             clientTotalTime += System.nanoTime() - startTimeClient;
 
-            for (int j = 0; j <= this.initialC; ++j) {
+            for (int j = 0; j <= this.d; ++j) {
 
                 try {
 
@@ -560,7 +560,7 @@ public class SecureIndex {
 
         long probValue;
         int searchKey;
-        for (int i = 0; i < L; ++i) {
+        for (int i = 0; i < l; ++i) {
 
             probValue = query.getLSHValueByIndex(i);
 
@@ -621,7 +621,7 @@ public class SecureIndex {
 
         long probValue;
         int searchKey;
-        for (int i = 0; i < L; ++i) {
+        for (int i = 0; i < l; ++i) {
 
             probValue = query.getLSHValueByIndex(i);
 
@@ -672,7 +672,7 @@ public class SecureIndex {
 
     private int serverPosition(long k1Vj, int counter) {
 
-        return (int) (PRF.HMACSHA256ToUnsignedInt(String.valueOf(counter), String.valueOf(k1Vj)) % this.W);
+        return (int) (PRF.HMACSHA256ToUnsignedInt(String.valueOf(counter), String.valueOf(k1Vj)) % this.w);
     }
 
     private long clientK2Vj(String key2, long lshValue) {

@@ -21,11 +21,11 @@ public class dynamicTest {
 
         String bowFileName = null;
 
-        short L = 0;
+        short l = 0;
 
-        int initialC = 0;
+        int d = 0;
 
-        int W = 0;
+        int w = 0;
 
         short thresholdOfKick = 10;
 
@@ -37,7 +37,7 @@ public class dynamicTest {
 
         int loopSize = 0;
 
-        double R = 0.0;
+        double r = 0.0;
 
         int limitTruePositive = 100;
 
@@ -51,7 +51,7 @@ public class dynamicTest {
         String sampleIndexFileName = "./sampleIndex.txt";
 
         if (args.length < 12) {
-            System.err.println("Error: arguments are not enough! Please follow the format:\n\t[lsh file path] [bow file path] [L] [initialC] [R] [loadFactor] [thresholdOfKick] [counterLimit] [LIMIT] [key1] [key2] [times]");
+            System.err.println("Error: arguments are not enough! Please follow the format:\n\t[lsh file path] [bow file path] [L] [D] [R] [loadFactor] [thresholdOfKick] [counterLimit] [LIMIT] [key1] [key2] [times]");
 
             System.exit(Constant.ERROR_ARGUMENTS);
         } else {
@@ -62,15 +62,15 @@ public class dynamicTest {
 
             times = Integer.parseInt(args[11]);
 
-            L = Short.parseShort(args[2]);
-            initialC = Short.parseShort(args[3]);
-            R = Double.parseDouble(args[4]);
+            l = Short.parseShort(args[2]);
+            d = Short.parseShort(args[3]);
+            r = Double.parseDouble(args[4]);
             thresholdOfKick = Short.parseShort(args[6]);
             counterLimit = Short.parseShort(args[7]);
             loopSize = Integer.parseInt(args[8]);
             limit = Integer.parseInt(args[8]) * times;
 
-            W = MathTool.getUpperPrimeNumber((int) (limit / L / Double.parseDouble(args[5])));
+            w = MathTool.getUpperPrimeNumber((int) (limit / l / Double.parseDouble(args[5])));
 
             //insertSize = (int)(0.9 * limit);
 
@@ -78,13 +78,13 @@ public class dynamicTest {
             key2 = args[10];
 
 
-            System.out.println("Select prime W as " + W);
+            System.out.println("Select prime W as " + w);
         }
 
         //SecureIndex secureIndex = new SecureIndex(L, W, initialC, thresholdOfKick, counterLimit, limit);
-        DynamicSecureIndex secureIndex = new DynamicSecureIndex(L, W, initialC, thresholdOfKick, counterLimit, limit, loopSize);
+        DynamicSecureIndex secureIndex = new DynamicSecureIndex(l, w, d, thresholdOfKick, counterLimit, limit, loopSize);
 
-        InvertedIndex invertedIndex = new InvertedIndex(L);
+        InvertedIndex invertedIndex = new InvertedIndex(l);
 
         System.out.println("Initialize Secure Index and Inverted Index           ---> Done");
 
@@ -114,7 +114,7 @@ public class dynamicTest {
             // read util null
             while ((tempString = reader.readLine()) != null) {
 
-                LSHVector lshVector = new LSHVector(lineNumber, tempString.replace("\n", ""), L);
+                LSHVector lshVector = new LSHVector(lineNumber, tempString.replace("\n", ""), l);
 
                 secureIndex.lshVectors[lineNumber] = lshVector;
 
@@ -173,7 +173,7 @@ public class dynamicTest {
             writer.write("\n\n\tTotal time cost: " + (insertTime + encryptTime) + " ms:" +
                     "\n\n\t\tInsert time: " + insertTime + " ms" +
                     "\n\t\tEncryption time: " + encryptTime + " ms" +
-                    "\n\n\tSetting:\n\t\tL = " + L + ", initialC = " + initialC + ", W = " + W + ", threshold = " + thresholdOfKick +
+                    "\n\n\tSetting:\n\t\tL = " + l + ", initialC = " + d + ", W = " + w + ", threshold = " + thresholdOfKick +
                     "\n\n\tResult:");
 
             for (InsertResult oneItem : insertResultList) {
@@ -195,7 +195,7 @@ public class dynamicTest {
                         break;
                 }
             }
-            writer.write("\n\t\tLoad factor:                            " + (float) insertResultList.size() * 100 / (L * W));
+            writer.write("\n\t\tLoad factor:                            " + (float) insertResultList.size() * 100 / (l * w));
             writer.write("%\n\t\tDirectly insert successfully:           " + numOfDirectInsert);
             writer.write("\n\t\tKick-away insert successfully:          " + numOfKickAway);
             writer.write("\n\t\tIncreasing counter insert successfully: " + numOfCounterTry);
@@ -390,7 +390,7 @@ public class dynamicTest {
 
                             if (bowLoaded) {
                                 //if (calculateDistance(bows.get(queryIndex), bows.get(oneItem.getId())) <= R) {
-                                if (MathTool.calculateDistance(BaseTool.mapIndex(queryIndex, loopSize), bowStrings.get(BaseTool.mapIndex(queryIndex, loopSize)), BaseTool.mapIndex(oneItem.getId(), loopSize), bowStrings.get(BaseTool.mapIndex(oneItem.getId(), loopSize)), 10000) <= R) {
+                                if (MathTool.calculateDistance(BaseTool.mapIndex(queryIndex, loopSize), bowStrings.get(BaseTool.mapIndex(queryIndex, loopSize)), BaseTool.mapIndex(oneItem.getId(), loopSize), bowStrings.get(BaseTool.mapIndex(oneItem.getId(), loopSize)), 10000) <= r) {
 
                                     ++correctBow;
                                 } else {
@@ -759,7 +759,7 @@ public class dynamicTest {
 
 
                                     //if (calculateDistance(bows.get(queryIndex), bows.get(oneItem.getId())) <= R) {
-                                    if (MathTool.calculateDistance(BaseTool.mapIndex(idx, loopSize), bowStrings.get(BaseTool.mapIndex(idx, loopSize)), BaseTool.mapIndex(oneItem.getId(), loopSize), bowStrings.get(BaseTool.mapIndex(oneItem.getId(), loopSize)), 10000) <= R) {
+                                    if (MathTool.calculateDistance(BaseTool.mapIndex(idx, loopSize), bowStrings.get(BaseTool.mapIndex(idx, loopSize)), BaseTool.mapIndex(oneItem.getId(), loopSize), bowStrings.get(BaseTool.mapIndex(oneItem.getId(), loopSize)), 10000) <= r) {
 
                                         ++correctBow;
                                     } else {
@@ -834,7 +834,7 @@ public class dynamicTest {
 
                             if (searchResult != null && searchResult.size() > limitTruePositive) {
                                 for (LSHVector oneItem : searchResult) {
-                                    if (MathTool.calculateDistance(BaseTool.mapIndex(idx, loopSize), bowStrings.get(BaseTool.mapIndex(idx, loopSize)), BaseTool.mapIndex(oneItem.getId(), loopSize), bowStrings.get(BaseTool.mapIndex(oneItem.getId(), loopSize)), 10000) <= R) {
+                                    if (MathTool.calculateDistance(BaseTool.mapIndex(idx, loopSize), bowStrings.get(BaseTool.mapIndex(idx, loopSize)), BaseTool.mapIndex(oneItem.getId(), loopSize), bowStrings.get(BaseTool.mapIndex(oneItem.getId(), loopSize)), 10000) <= r) {
 
                                         ++correct;
                                     }
@@ -915,7 +915,7 @@ public class dynamicTest {
 
                             if (searchResult != null && searchResult.size() > limitTruePositive) {
                                 for (LSHVector oneItem : searchResult) {
-                                    if (MathTool.calculateDistance(BaseTool.mapIndex(idx, loopSize), bowStrings.get(BaseTool.mapIndex(idx, loopSize)), (oneItem.getId() - 1) % loopSize, bowStrings.get((oneItem.getId() - 1) % loopSize), 10000) <= R) {
+                                    if (MathTool.calculateDistance(BaseTool.mapIndex(idx, loopSize), bowStrings.get(BaseTool.mapIndex(idx, loopSize)), (oneItem.getId() - 1) % loopSize, bowStrings.get((oneItem.getId() - 1) % loopSize), 10000) <= r) {
 
                                         ++correctBow;
                                     }

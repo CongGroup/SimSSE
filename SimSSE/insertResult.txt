@@ -114,3 +114,32 @@ DSSSE Experiment - Building Secure Index:
 
 Insert testing finished at 2015-06-26 05:47:54.
 
+-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
+
+DSSSE Experiment - Building Secure Index:
+
+	Data set: H:\data\ccs14\lsh-L10R005-sample.txt
+
+	Version: with counter, limited in 1000
+
+	Total time cost: 243 ms:
+
+		Insert time: 224 ms
+		Encryption time: 19 ms
+
+	Setting:
+		L = 10, initialC = 5, W = 127, threshold = 10
+
+	Result:
+		Load factor:                            78.74016%
+		Directly insert successfully:           1000
+		Kick-away insert successfully:          0
+		Increasing counter insert successfully: 0
+		Insert failed:                          0
+		Maximum counter:                        5
+		Total kick number:                      0
+
+		Average try time:                       2.184
+
+Insert testing finished at 2015-06-26 06:10:40.
+
