@@ -268,44 +268,6 @@ public class DynamicSecureIndex {
         }
     }
 
-
-    /**
-     * Search similar items in secure index table
-     *
-     * @param query query
-     * @return limited in L*D
-     */
-    /*
-    public ArrayList<LSHVector> search(LSHVector query) {
-
-        ArrayList<LSHVector> similarItemList = new ArrayList<LSHVector>(L * initialC);
-
-        long probValue;
-        int searchKey;
-        for (int i = 0; i < L; ++i) {
-
-            probValue = query.getLSHValueByIndex(i);
-
-            searchKey = (int) (PRF.SHA256ToUnsignedInt(String.valueOf(probValue) + "0") % W);
-
-            if (indexTable[i][searchKey] != 0) {
-
-                similarItemList.add(this.lshDataSpace.get(recoverIndex(indexTable[i][searchKey])));
-            }
-
-            for (int j = 1; j <= initialC; ++j) {
-                searchKey = (int) (PRF.SHA256ToUnsignedInt(String.valueOf(probValue) + String.valueOf(j)) % W);
-
-                if (indexTable[i][searchKey] != 0) {
-
-                    similarItemList.add(this.lshDataSpace.get(recoverIndex(indexTable[i][searchKey])));
-                }
-            }
-        }
-
-        return similarItemList;
-    }
-*/
     public HashSet<LSHVector> searchSecure(LSHVector query, String key1, String key2) {
 
         HashSet<LSHVector> similarItemList = new HashSet<LSHVector>(l * d);
@@ -834,18 +796,6 @@ public class DynamicSecureIndex {
 
         return (long) id ^ r;
     }
-
-
-    /*public static long decryptValue(String key2, long lshValue, int position, long cipherValue) {
-
-        long k2Vj = PRF.HMACSHA256ToUnsignedInt(String.valueOf(lshValue), key2);
-
-        long r = BaseTool.flod256Bytes(PRF.HMACSHA256(String.valueOf(position), String.valueOf(k2Vj)));
-
-        long mid = cipherValue ^ r;
-
-        return mid;
-    }*/
 
     public int getMaxC() {
         return maxC;
