@@ -17,4 +17,27 @@ Searchable symmetric encryption (SSE) has been studied extensively for its full 
     - "times": the number of copies of each record (for testing);
 
   - E.g., "\lsh-L10R005-sample.txt \bow-u-100w-sample.txt 10 5 0.05 0.8 10 1000 1000 hongkong harry 1"
+
+- Software Interface:
+````
+----------------------- Root Menu -----------------------
+Please select an operation:
+
+[1]  ...
+[2]  load BOW file;
+[3]  query test;
+[4]  random sample test;
+[5]  find good LSH points;
+[6]  find good BOW points;
+[7]  build inverted index of LSH;
+[8]  test good points;
+[9]  insert;
+[10] delete;
+[11] batch insert;
+[12] batch delete;
+[QUIT] quit system.
+
+--->
+
+````
   
